@@ -1,0 +1,37 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "emoo",
+  "compatibility_date": "2026-09-10",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "src/server.ts",
+  "observability": {
+    "enabled": true
+  },
+  "secrets": {
+    "required": ["GEMINI_ANTHROPIC_API_KEY"]
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "MONITOR_STATE",
+        "class_name": "MonitorState"
+      }
+    ]
+  },
+  "exports": {
+    "MonitorState": {
+      "type": "durable-object",
+      "storage": "sqlite"
+    }
+  },
+  "env": {
+    "production": {
+      "routes": [
+        {
+          "pattern": "emonitor.zzatworq.dev",
+          "zone_name": "zzatworq.dev"
+        }
+      ]
+    }
+  }
+}
